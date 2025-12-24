@@ -47,6 +47,13 @@ class AccountManager:
                 detail="Email already registered"
             )
 
+        # bcrypt has a 72-byte input limit; enforce it explicitly so callers get a clear error
+        if len(data.password.encode("utf-8")) > 72:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Password is too long (must be 72 bytes or fewer). Please shorten or truncate your password."
+            )
+
         user = DatabaseManager.create_user(
             db=db,
             name=data.name,
@@ -87,6 +94,13 @@ class AccountManager:
         ok = DatabaseManager.verify_and_consume_otp(db, email, otp_code)
         if not ok:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid or expired OTP")
+
+        # enforce bcrypt byte-length limit
+        if len(new_password.encode("utf-8")) > 72:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="New password is too long (must be 72 bytes or fewer). Please shorten or truncate your password."
+            )
 
         DatabaseManager.update_password(db, email, hash_password(new_password))
         return True
