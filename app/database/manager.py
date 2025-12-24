@@ -127,3 +127,23 @@ class DatabaseManager:
             scan.is_deleted = True
             db.commit()
         return scan
+
+    @staticmethod
+    def soft_delete_scans(db, scan_ids: list):
+        # Soft-delete multiple scans by ids
+        if not scan_ids:
+            return 0
+        scans = db.query(ScanRecord).filter(ScanRecord.id.in_(scan_ids)).all()
+        if not scans:
+            return 0
+        for scan in scans:
+            scan.is_deleted = True
+        db.commit()
+        return len(scans)
+
+    @staticmethod
+    def soft_delete_all_scans(db):
+        # Soft-delete all scans that are not already deleted
+        updated = db.query(ScanRecord).filter(ScanRecord.is_deleted == False).update({"is_deleted": True}, synchronize_session=False)
+        db.commit()
+        return updated
