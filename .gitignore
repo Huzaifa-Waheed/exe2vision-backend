@@ -44,3 +44,6 @@ Thumbs.db
 # Database
 *.db
 *.sqlite3
+
+#Upload Files
+uploaded_files/
