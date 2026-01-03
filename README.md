@@ -18,3 +18,30 @@ Example (Windows PowerShell):
 $env:EXE_TO_ASM_PATH = "C:\tools\exetoassembly.exe"
 $env:EXE_TO_ASM_TIMEOUT = "30"
 ```
+
+---
+
+## Installation notes (Windows)
+
+If pip attempts to build packages like NumPy from source and fails with a compiler error, try one of the following:
+
+- Upgrade pip, setuptools and wheel, then prefer binary wheels:
+
+```powershell
+python -m pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt --prefer-binary
+```
+
+- Use conda/miniconda (recommended on Windows) to get prebuilt binaries:
+
+```powershell
+conda create -n exe2env python=3.11
+conda activate exe2env
+conda install numpy pandas opencv
+pip install -r requirements.txt --no-deps
+```
+
+- If you must build from source, install the **Build Tools for Visual Studio** (C++ workload) and retry `pip install -r requirements.txt`.
+
+Note: `requirements.txt` pins NumPy to `numpy>=1.23,<2` to prefer stable prebuilt wheels for most Python versions. If you still run into issues, run `python -V` and share the output so I can recommend a specific NumPy wheel to install.
+
