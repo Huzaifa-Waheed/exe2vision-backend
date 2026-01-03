@@ -23,7 +23,7 @@ class MLModel:
         """
         try:
             # default to unigrams; you can parameterize this later
-            img = generate_image_from_asm_text(asm, ngram=1, save_output=False)
+            img = generate_image_from_asm_text(asm, ngram=2, save_output=False)
             # ensure a numpy array output
             return np.asarray(img)
         except Exception as e:
