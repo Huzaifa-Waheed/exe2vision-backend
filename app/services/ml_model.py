@@ -1,13 +1,24 @@
+import logging
+from app.services.exe_to_asm import disassemble_exe
+
 class MLModel:
 
     def disassemble(self, file_path):
-        return "ASM_CODE"
+        """
+        Disassemble the given executable by calling the external exetoassembly tool.
+        Returns the assembly text as a string, or an empty string on failure.
+        """
+        try:
+            asm = disassemble_exe(file_path)
+            return asm
+        except Exception as e:
+            logging.exception("Disassembly failed: %s", e)
+            return ""
 
-    def generate_ngrams(self, asm):
-        return [1,2,3]
-
-    def convert_to_rgb(self, ngrams):
+    def convert_to_rgb(self, asm):
+        # TODO: implement a real asm -> image conversion; currently a placeholder
         return "image_array"
 
     def classify_image(self, image):
-        return {"label": "Malware", "probability": 0.93}
+        # TODO: replace with real model inference
+        return {"label": "Malware", "probability": 0.93} 
