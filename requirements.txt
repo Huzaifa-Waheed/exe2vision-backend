@@ -14,5 +14,10 @@ capstone
 
 # For asm -> image
 pandas
-numpy>=1.23,<2
+numpy>=1.23
 opencv-python
+
+# For ML inference
+torch
+torchvision
+Pillow

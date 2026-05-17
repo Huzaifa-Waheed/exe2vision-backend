@@ -3,7 +3,7 @@ from app.database.session import SessionLocal
 from app.models.user import User
 from app.models.scan import ScanRecord
 from app.models.otp import OTPRecord
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class DatabaseManager:
 

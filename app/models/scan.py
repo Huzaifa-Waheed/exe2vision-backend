@@ -16,8 +16,9 @@ class ScanRecord(Base):
 
     def to_dict(self):
         return {
+            "id": self.id,
             "filename": self.filename,
             "result": self.result,
             "probability": self.probability,
-            "scanned_at": self.scanned_at
+            "scanned_at": self.scanned_at,
         }
